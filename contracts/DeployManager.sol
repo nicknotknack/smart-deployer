@@ -5,6 +5,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/proxy/Clones.sol";
 import "./IUtilityContract.sol";
 
+//Deploy Manager
 contract DeployManager is Ownable {
 
     event NewContractAdded(address _contractAddress, uint256 _fee, bool _isActive, uint256 _timestamp);
