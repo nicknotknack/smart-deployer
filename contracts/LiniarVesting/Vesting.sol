@@ -69,6 +69,7 @@ contract Vesting is IUtilityContract, Ownable {
 
         vesting.claimed += claimable;
         vesting.lastClaimTime = block.timestamp;
+        allocatedTokens -= claimable;
 
         require(token.transfer(msg.sender, claimable), TransferFailed());
 
