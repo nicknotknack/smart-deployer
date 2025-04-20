@@ -6,7 +6,6 @@ import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract ERC721Airdroper is IUtilityContract, Ownable {
-
     constructor() Ownable(msg.sender) {}
 
     IERC721 public token;
@@ -27,16 +26,12 @@ contract ERC721Airdroper is IUtilityContract, Ownable {
         require(receivers.length == tokenId.length, ArraysLengthMismatch());
         require(token.isApprovedForAll(treasury, address(this)), NeedToApproveTokens());
 
-        for(uint256 i = 0; i < tokenId.length; i++) {
-            token.safeTransferFrom(
-                treasury,
-                receivers[i],
-                tokenId[i]);
+        for (uint256 i = 0; i < tokenId.length; i++) {
+            token.safeTransferFrom(treasury, receivers[i], tokenId[i]);
         }
     }
 
-    function initialize(bytes memory _initData) external notInitialized returns(bool) {
-
+    function initialize(bytes memory _initData) external notInitialized returns (bool) {
         (address _token, address _treasury, address _owner) = abi.decode(_initData, (address, address, address));
 
         token = IERC721(_token);
@@ -48,8 +43,7 @@ contract ERC721Airdroper is IUtilityContract, Ownable {
         return true;
     }
 
-    function getInitData(address _token, address _treasury, address _owner) external pure returns(bytes memory) {
+    function getInitData(address _token, address _treasury, address _owner) external pure returns (bytes memory) {
         return abi.encode(_token, _treasury, _owner);
     }
-
 }

@@ -39,6 +39,12 @@ $ forge fmt
 $ forge snapshot
 ```
 
+### Semgrep
+
+```powershell
+$ semgrep --config "p/smart-contracts" src/
+```
+
 ### Anvil
 
 ```shell
