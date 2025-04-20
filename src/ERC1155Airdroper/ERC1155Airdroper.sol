@@ -1,18 +1,22 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.29;
 
-import "../IUtilityContract.sol";
+import "../UtilityContract/IUtilityContract.sol";
 import "@openzeppelin/contracts/token/ERC1155/IERC1155.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract ERC1155Airdroper is IUtilityContract, Ownable {
-    constructor() Ownable(msg.sender) {}
+    constructor() Ownable(msg.sender) payable {}
+
+    uint256 constant public MAX_AIRDROP_BATCH_SIZE = 10;
 
     IERC1155 public token;
     address public treasury;
 
     error AlreadyInitialized();
-    error ArraysLengthMismatch();
+    error ReceiversLengthMismatch();
+    error AmountsLengthMismatch();
+    error BatchSizeExceeded();
     error NeedToApproveTokens();
 
     modifier notInitialized() {
@@ -22,15 +26,22 @@ contract ERC1155Airdroper is IUtilityContract, Ownable {
 
     bool private initialized;
 
-    function airdrop(address[] calldata receivers, uint256[] calldata amounts, uint256[] calldata tokenId)
+    function airdrop(address[] calldata receivers, uint256[] calldata amounts, uint256[] calldata tokenIds)
         external
         onlyOwner
     {
-        require(receivers.length == amounts.length && receivers.length == tokenId.length, ArraysLengthMismatch());
+        require(tokenIds.length <= MAX_AIRDROP_BATCH_SIZE, BatchSizeExceeded());
+        require(receivers.length == tokenIds.length, ReceiversLengthMismatch());
+        require(amounts.length == tokenIds.length, AmountsLengthMismatch());
         require(token.isApprovedForAll(treasury, address(this)), NeedToApproveTokens());
 
-        for (uint256 i = 0; i < amounts.length; i++) {
-            token.safeTransferFrom(treasury, receivers[i], tokenId[i], amounts[i], "");
+        address treasuryAddress = treasury;
+
+        for (uint256 i = 0; i < amounts.length;) {
+            token.safeTransferFrom(treasuryAddress, receivers[i], tokenIds[i], amounts[i], "");
+            unchecked {
+                ++i;
+            }
         }
     }
 
