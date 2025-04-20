@@ -19,7 +19,7 @@ contract DeployManager is Ownable {
 
     struct ContractInfo{
         uint256 fee;
-        bool isActive; 
+        bool isActive;
         uint256 registredAt;
     }
 

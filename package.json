@@ -1,0 +1,20 @@
+{
+  "name": "solidity-compiler-project",
+  "version": "1.0.0",
+  "description": "A project for compiling Solidity contracts using Hardhat and TypeScript.",
+  "main": "scripts/compile.ts",
+  "scripts": {
+    "compile": "ts-node scripts/compile.ts",
+    "test": "hardhat test"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^5.3.0",
+    "ts-node": "^10.0.0",
+    "typescript": "^4.5.0"
+  },
+  "devDependencies": {
+    "@types/node": "^16.0.0"
+  },
+  "author": "",
+  "license": "MIT"
+}

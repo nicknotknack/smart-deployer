@@ -52,7 +52,7 @@ contract ERC20Airdroper is IUtilityContract, Ownable {
     function getInitData(address _token, uint256 _amount, address _treasury, address _owner) external pure returns(bytes memory) {
         return abi.encode(_token, _amount, _treasury, _owner);
     }
-    
+
 
 }
 
