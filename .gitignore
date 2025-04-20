@@ -3,3 +3,5 @@
 artifacts
 contracts/artifacts
 lib/
+cache/
+out/
