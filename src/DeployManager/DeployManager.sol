@@ -8,7 +8,7 @@ import "./IDeployManager.sol";
 
 //Deploy Manager
 contract DeployManager is IDeployManager, Ownable {
-    constructor() Ownable(msg.sender) payable {}
+    constructor() payable Ownable(msg.sender) {}
 
     struct ContractInfo {
         uint256 fee;
@@ -24,7 +24,7 @@ contract DeployManager is IDeployManager, Ownable {
     error ContractDoesNotRegistered();
     error InitializationFailed();
 
-    function deploy(address _utilityContract, bytes calldata _initData) external override payable returns (address) {
+    function deploy(address _utilityContract, bytes calldata _initData) external payable override returns (address) {
         ContractInfo memory info = contractsData[_utilityContract];
 
         require(info.isActive, ContractNotActive());

@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.29;
 
-import { IDeployManager } from "../DeployManager/IDeployManager.sol";
-import { IUtilityContract } from "./IUtilityContract.sol";
+import {IDeployManager} from "../DeployManager/IDeployManager.sol";
+import {IUtilityContract} from "./IUtilityContract.sol";
 
 abstract contract AbstractUtilityContract is IUtilityContract {
     address public deployManager;

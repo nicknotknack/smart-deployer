@@ -6,7 +6,7 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract Vesting is IUtilityContract, Ownable {
-    constructor() Ownable(msg.sender) payable {}
+    constructor() payable Ownable(msg.sender) {}
 
     IERC20 public token;
     bool private initialized;

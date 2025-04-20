@@ -6,9 +6,9 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract ERC20Airdroper is AbstractUtilityContract, Ownable {
-    constructor() Ownable(msg.sender) payable {}
+    constructor() payable Ownable(msg.sender) {}
 
-    uint256 constant public MAX_AIRDROP_BATCH_SIZE = 300;
+    uint256 public constant MAX_AIRDROP_BATCH_SIZE = 300;
 
     IERC20 public token;
     uint256 public amount;
