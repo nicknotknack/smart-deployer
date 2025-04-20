@@ -2,3 +2,4 @@
 .states
 artifacts
 contracts/artifacts
+lib/
