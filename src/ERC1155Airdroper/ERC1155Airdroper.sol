@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.29;
 
-import "../UtilityContract/IUtilityContract.sol";
+import "../UtilityContract/AbstractUtilityContract.sol";
 import "@openzeppelin/contracts/token/ERC1155/IERC1155.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
-contract ERC1155Airdroper is IUtilityContract, Ownable {
+contract ERC1155Airdroper is AbstractUtilityContract, Ownable {
     constructor() payable Ownable(msg.sender) {}
 
     uint256 public constant MAX_AIRDROP_BATCH_SIZE = 10;
@@ -45,8 +45,10 @@ contract ERC1155Airdroper is IUtilityContract, Ownable {
         }
     }
 
-    function initialize(bytes memory _initData) external notInitialized returns (bool) {
-        (address _token, address _treasury, address _owner) = abi.decode(_initData, (address, address, address));
+    function initialize(bytes memory _initData) external override notInitialized returns (bool) {
+        (address _deployManager, address _token, address _treasury, address _owner) = abi.decode(_initData, (address, address, address, address));
+
+        setDeployManager(_deployManager);
 
         token = IERC1155(_token);
         treasury = _treasury;
@@ -57,7 +59,7 @@ contract ERC1155Airdroper is IUtilityContract, Ownable {
         return true;
     }
 
-    function getInitData(address _token, address _treasury, address _owner) external pure returns (bytes memory) {
-        return abi.encode(_token, _treasury, _owner);
+    function getInitData(address _deployManager, address _token, address _treasury, address _owner) external pure returns (bytes memory) {
+        return abi.encode(_deployManager, _token, _treasury, _owner);
     }
 }

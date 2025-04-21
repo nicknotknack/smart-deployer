@@ -1,7 +1,15 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.29;
 
-interface IDeployManager {
+import "@openzeppelin/contracts/interfaces/IERC165.sol";
+
+interface IDeployManager is IERC165 {
+    error ContractNotActive();
+    error NotEnoughtFunds();
+    error ContractDoesNotRegistered();
+    error InitializationFailed();
+    error ContractIsNotUtilityContract();
+
     event NewContractAdded(address indexed _contractAddress, uint256 _fee, bool _isActive, uint256 _timestamp);
     event ContractFeeUpdated(address indexed _contractAddress, uint256 _oldFee, uint256 _newFee, uint256 _timestamp);
     event ContractStatusUpdated(address indexed _contractAddress, bool _isActive, uint256 _timestamp);

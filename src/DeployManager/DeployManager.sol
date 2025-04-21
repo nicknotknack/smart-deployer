@@ -1,13 +1,14 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.29;
 
+import "@openzeppelin/contracts/utils/introspection/ERC165.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/proxy/Clones.sol";
 import "../UtilityContract/IUtilityContract.sol";
 import "./IDeployManager.sol";
 
 //Deploy Manager
-contract DeployManager is IDeployManager, Ownable {
+contract DeployManager is IDeployManager, Ownable, ERC165 {
     constructor() payable Ownable(msg.sender) {}
 
     struct ContractInfo {
@@ -18,11 +19,6 @@ contract DeployManager is IDeployManager, Ownable {
 
     mapping(address => address[]) public deployedContracts;
     mapping(address => ContractInfo) public contractsData;
-
-    error ContractNotActive();
-    error NotEnoughtFunds();
-    error ContractDoesNotRegistered();
-    error InitializationFailed();
 
     function deploy(address _utilityContract, bytes calldata _initData) external payable override returns (address) {
         ContractInfo memory info = contractsData[_utilityContract];
@@ -45,6 +41,8 @@ contract DeployManager is IDeployManager, Ownable {
     }
 
     function addNewContract(address _contractAddress, uint256 _fee, bool _isActive) external override onlyOwner {
+        require(IUtilityContract(_contractAddress).supportsInterface(type(IUtilityContract).interfaceId), ContractIsNotUtilityContract());
+
         contractsData[_contractAddress] = ContractInfo({fee: _fee, isActive: _isActive, registredAt: block.timestamp});
 
         emit NewContractAdded(_contractAddress, _fee, _isActive, block.timestamp);
@@ -73,5 +71,11 @@ contract DeployManager is IDeployManager, Ownable {
         contractsData[_address].isActive = true;
 
         emit ContractStatusUpdated(_address, true, block.timestamp);
+    }
+
+    function supportsInterface(bytes4 interfaceId) public view virtual override(IERC165, ERC165) returns (bool) {
+        return
+            interfaceId == type(IDeployManager).interfaceId ||
+            super.supportsInterface(interfaceId);
     }
 }
