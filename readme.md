@@ -41,8 +41,16 @@ $ forge snapshot
 
 ### Semgrep
 
-```powershell
+```shell
 $ semgrep --config "p/smart-contracts" src/
+```
+
+### Generate Docs
+
+```shell
+$ forge doc
+$ forge doc --build
+$ forge doc --serve --port 4000
 ```
 
 ### Anvil

@@ -6,6 +6,10 @@ import "@openzeppelin/contracts/utils/introspection/ERC165.sol";
 import {IDeployManager} from "../DeployManager/IDeployManager.sol";
 import {IUtilityContract} from "./IUtilityContract.sol";
 
+/// @title AbstractUtilityContract - Abstract contract for utility contracts
+/// @author Solidity University
+/// @notice This abstract contract provides a base implementation for utility contracts.
+/// @dev Utility contracts should inherit from this contract and implement the initialize function.
 abstract contract AbstractUtilityContract is IUtilityContract, ERC165 {
     address public deployManager;
 
@@ -41,8 +45,6 @@ abstract contract AbstractUtilityContract is IUtilityContract, ERC165 {
     }
 
     function supportsInterface(bytes4 interfaceId) public view virtual override(IERC165, ERC165) returns (bool) {
-        return
-            interfaceId == type(IUtilityContract).interfaceId ||
-            super.supportsInterface(interfaceId);
+        return interfaceId == type(IUtilityContract).interfaceId || super.supportsInterface(interfaceId);
     }
 }

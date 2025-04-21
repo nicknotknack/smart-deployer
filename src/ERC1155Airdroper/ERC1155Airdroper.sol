@@ -46,7 +46,8 @@ contract ERC1155Airdroper is AbstractUtilityContract, Ownable {
     }
 
     function initialize(bytes memory _initData) external override notInitialized returns (bool) {
-        (address _deployManager, address _token, address _treasury, address _owner) = abi.decode(_initData, (address, address, address, address));
+        (address _deployManager, address _token, address _treasury, address _owner) =
+            abi.decode(_initData, (address, address, address, address));
 
         setDeployManager(_deployManager);
 
@@ -59,7 +60,11 @@ contract ERC1155Airdroper is AbstractUtilityContract, Ownable {
         return true;
     }
 
-    function getInitData(address _deployManager, address _token, address _treasury, address _owner) external pure returns (bytes memory) {
+    function getInitData(address _deployManager, address _token, address _treasury, address _owner)
+        external
+        pure
+        returns (bytes memory)
+    {
         return abi.encode(_deployManager, _token, _treasury, _owner);
     }
 }
