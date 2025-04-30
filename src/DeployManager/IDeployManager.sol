@@ -26,6 +26,9 @@ interface IDeployManager is IERC165 {
     /// @dev Reverts if the contract is not a utility contract
     error ContractIsNotUtilityContract();
 
+    /// @dev Reverts if the contracts already registered
+    error AlreadyRegistered();
+
     // ------------------------------------------------------------------------
     // Events
     // ------------------------------------------------------------------------
