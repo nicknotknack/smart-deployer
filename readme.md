@@ -15,6 +15,8 @@ https://book.getfoundry.sh/
 
 ## Usage
 
+Rename 'remappings.txt.disabled' to 'remappings.txt' if you plan using foundry.
+
 ### Build
 
 ```shell
