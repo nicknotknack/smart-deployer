@@ -9,5 +9,3 @@ contract ERC20Mock is ERC20 {
         _mint(recipient, 10000 * 10 ** decimals());
     }
 }
-
-//10000000000000000000000

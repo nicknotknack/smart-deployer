@@ -1,4 +1,5 @@
 .deps
 .states
+.cache
 artifacts
 contracts/artifacts
