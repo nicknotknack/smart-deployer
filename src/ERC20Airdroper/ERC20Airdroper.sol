@@ -63,9 +63,6 @@ contract ERC20Airdroper is AbstractUtilityContract, Ownable {
     }
 
     /// @inheritdoc IUtilityContract
-    /// @notice Initializes the airdropper contract with required config
-    /// @param _initData Encoded deployManager, token, amount, treasury, and new owner
-    /// @return success True if initialized
     function initialize(bytes memory _initData) external override notInitialized returns (bool) {
         (address _deployManager, address _token, uint256 _amount, address _treasury, address _owner) =
             abi.decode(_initData, (address, address, uint256, address, address));
